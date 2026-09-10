@@ -467,7 +467,46 @@
             renderCatalog(filtered);
         }
 
-        // INITIAL RENDER
+      
+// Masukkan URL Publikasi CSV dari Google Sheets kamu di sini
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR-m8ygM3npYxQ9mKEditjZaJeULLwj8mwC_cFXCjCa-HV73bxanqE5aYhCjdt1mI_l4TiX88W_oAgg/pub?output=csv"; 
+const NO_WA = "6281910418032"; // Nomor WA kamu
+
+// Fungsi untuk mengambil data dari Google Sheets secara otomatis
+async function fetchProductsFromSheets() {
+    try {
+        const response = await fetch(SHEET_CSV_URL);
+        const data = await response.text();
+        
+        // Parsing CSV menjadi Array Of Objects
+        const rows = data.split('\n').slice(1);
+        const products = rows.map(row => {
+            const cols = row.split(','); // atau pemisah sesuai regional
+            if (cols.length < 8) return null;
+            return {
+                id: cols[0]?.trim(),
+                title: cols[1]?.trim(),
+                brand: cols[2]?.trim(),
+                ramRom: cols[3]?.trim(),
+                condition: cols[4]?.trim(),
+                qcStatus: cols[5]?.trim(),
+                price: parseInt(cols[6]?.trim()) || 0,
+                status: cols[7]?.trim(),
+                image: cols[8]?.trim()
+            };
+        }).filter(item => item !== null);
+
+        window.allProducts = products;
+        renderCatalog(products);
+    } catch (error) {
+        console.error("Gagal mengambil data stok:", error);
+    }
+}
+
+// Panggil fungsi saat halaman dimuat
+fetchProductsFromSheets();
+
+          // INITIAL RENDER
         renderCatalog(products);
     </script>
 </body>
