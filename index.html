@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katalog HP Second Bergaransi | tqf.gadget</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS RESET & VARIABLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #2563eb;
+            --accent-hover: #1d4ed8;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --wa-color: #25d366;
+            --wa-hover: #1ebe5d;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            padding-bottom: 40px;
+        }
+
+        /* HEADER & BANNER */
+        header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 24px 16px;
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+        }
+
+        .brand-logo span {
+            color: var(--accent-color);
+        }
+
+        .tagline {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background-color: rgba(37, 99, 235, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* CONTAINER & CONTROLS */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 16px;
+        }
+
+        .filter-section {
+            background-color: var(--card-bg);
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        @media (min-width: 768px) {
+            .filter-section {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 12px 10px 38px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .filter-group select {
+            flex: 1;
+            padding: 10px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        /* KATALOG GRID */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .card-img-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 75%; /* Aspect Ratio 4:3 */
+            background-color: #0f172a;
+        }
+
+        .card-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .status-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-ready {
+            background-color: #16a34a;
+            color: #ffffff;
+        }
+
+        .status-sold {
+            background-color: #dc2626;
+            color: #ffffff;
+        }
+
+        .card-body {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .item-brand {
+            font-size: 0.75rem;
+            color: var(--accent-color);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .item-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 2px 0 8px 0;
+            color: var(--text-primary);
+        }
+
+        .item-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-bottom: 12px;
+        }
+
+        .item-specs {
+            list-style: none;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .item-specs li {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .item-specs i {
+            color: var(--accent-color);
+            width: 14px;
+        }
+
+        .btn-wa {
+            margin-top: auto;
+            background-color: var(--wa-color);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .btn-wa:hover {
+            background-color: var(--wa-hover);
+        }
+
+        .btn-disabled {
+            background-color: #475569;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="brand-logo">tqf<span>.gadget</span></div>
+        <div class="tagline">Katalog HP Second Quality Control Ketat & Bergaransi</div>
+        <div class="badges">
+            <span class="badge"><i class="fa-solid fa-shield-check"></i> QC 100% Normal</span>
+            <span class="badge"><i class="fa-solid fa-handshake"></i> BISA COD</span>
+            <span class="badge"><i class="fa-solid fa-clock-rotate-left"></i> Garansi Toko</span>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        
+        <!-- SEARCH & FILTER BAR -->
+        <div class="filter-section">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Cari tipe HP (misal: Samsung, iPhone, Poco)..." onkeyup="filterItems()">
+            </div>
+            <div class="filter-group">
+                <select id="brandFilter" onchange="filterItems()">
+                    <option value="ALL">Semua Brand</option>
+                    <option value="Samsung">Samsung</option>
+                    <option value="Xiaomi">Xiaomi / Poco</option>
+                    <option value="Apple">Apple / iPhone</option>
+                    <option value="Vivo">Vivo</option>
+                    <option value="Oppo">Oppo / Realme</option>
+                </select>
+
+                <select id="statusFilter" onchange="filterItems()">
+                    <option value="ALL">Semua Status</option>
+                    <option value="Ready">Ready Stock</option>
+                    <option value="Sold Out">Terjual (Sold)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- KATALOG GRID -->
+        <div class="catalog-grid" id="catalogGrid">
+            <!-- Data produk akan dirender oleh JavaScript di bawah -->
+        </div>
+
+        <footer>
+            <p>&copy; 2026 tqf.gadget — HP Second Berkualitas & Terpercaya</p>
+        </footer>
+    </div>
+
+    <!-- JAVASCRIPT / DATA PRODUK -->
+    <script>
+        // No WA Toko (Ganti dengan nomor WhatsApp aktif Anda, format 628xxx)
+        const NO_WA = "6281234567890";
+
+        // DATA KATALOG STOK (Bisa ditambah/edit langsung di sini)
+        const products = [
+            {
+                id: "TQ-001",
+                title: "Samsung Galaxy A52",
+                brand: "Samsung",
+                ramRom: "8GB / 128GB",
+                condition: "95% Mulus (Pemakaian Wajar)",
+                qcStatus: "QC 100% Normal - Fullset Original",
+                price: 2300000,
+                status: "Ready",
+                image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500&auto=format&fit=crop&q=60"
+            },
+            {
+                id: "TQ-002",
+                title: "Redmi Note 11",
+                brand: "Xiaomi",
+                ramRom: "6GB / 128GB",
+                condition: "90% Lecet Pemakaian",
+                qcStatus: "QC 100% Normal - Unit + Charger Fast",
+                price: 1650000,
+                status: "Ready",
+                image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500&auto=format&fit=crop&q=60"
+            },
+            {
+                id: "TQ-003",
+                title: "iPhone 11 64GB",
+                brand: "Apple",
+                ramRom: "64GB",
+                condition: "98% Mulus (Like New)",
+                qcStatus: "BH 85% - TrueTone On - 3uTools Hijau",
+                price: 4100000,
+                status: "Sold Out",
+                image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=500&auto=format&fit=crop&q=60"
+            },
+            {
+                id: "TQ-004",
+                title: "Poco M4 Pro",
+                brand: "Xiaomi",
+                ramRom: "8GB / 256GB",
+                condition: "93% Mulus",
+                qcStatus: "QC 100% Normal - Fullset Dusbook",
+                price: 1950000,
+                status: "Ready",
+                image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&auto=format&fit=crop&q=60"
+            },
+            {
+                id: "TQ-005",
+                title: "Vivo Y21s",
+                brand: "Vivo",
+                ramRom: "4GB / 128GB",
+                condition: "88% Ada Jamur Casing",
+                qcStatus: "QC Normal - Unit Only",
+                price: 950000,
+                status: "Ready",
+                image: "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=500&auto=format&fit=crop&q=60"
+            }
+        ];
+
+        // FUNGSI FORMAT RUPIAH
+        function formatRupiah(number) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
+        }
+
+        // FUNGSI RENDER KATALOG
+        function renderCatalog(items) {
+            const grid = document.getElementById('catalogGrid');
+            grid.innerHTML = "";
+
+            if (items.length === 0) {
+                grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-secondary); padding: 40px 0;">Unit tidak ditemukan.</p>`;
+                return;
+            }
+
+            items.forEach(item => {
+                const isReady = item.status === "Ready";
+                const waMessage = encodeURIComponent(`Halo tqf.gadget, saya tertarik dengan unit ${item.title} (${item.id}) seharga ${formatRupiah(item.price)} di katalog website. Apakah unit masih ready?`);
+                const waLink = `https://wa.me/${NO_WA}?text=${waMessage}`;
+
+                const cardHTML = `
+                    <div class="card">
+                        <div class="card-img-wrapper">
+                            <img src="${item.image}" alt="${item.title}" class="card-img">
+                            <span class="status-tag ${isReady ? 'status-ready' : 'status-sold'}">${item.status}</span>
+                        </div>
+                        <div class="card-body">
+                            <span class="item-brand">${item.brand}</span>
+                            <h3 class="item-title">${item.title}</h3>
+                            <div class="item-price">${formatRupiah(item.price)}</div>
+                            <ul class="item-specs">
+                                <li><i class="fa-solid fa-microchip"></i> RAM/Internal: ${item.ramRom}</li>
+                                <li><i class="fa-solid fa-star"></i> Kondisi: ${item.condition}</li>
+                                <li><i class="fa-solid fa-circle-check"></i> ${item.qcStatus}</li>
+                            </ul>
+                            ${isReady 
+                                ? `<a href="${waLink}" target="_blank" class="btn-wa"><i class="fa-brands fa-whatsapp"></i> Tanya Unit / COD</a>`
+                                : `<a href="#" class="btn-wa btn-disabled"><i class="fa-solid fa-ban"></i> Terjual</a>`
+                            }
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += cardHTML;
+            });
+        }
+
+        // FUNGSI FILTER & SEARCH
+        function filterItems() {
+            const searchValue = document.getElementById('searchInput').value.toLowerCase();
+            const selectedBrand = document.getElementById('brandFilter').value;
+            const selectedStatus = document.getElementById('statusFilter').value;
+
+            const filtered = products.filter(item => {
+                const matchesSearch = item.title.toLowerCase().includes(searchValue) || item.ramRom.toLowerCase().includes(searchValue);
+                const matchesBrand = (selectedBrand === "ALL") || (item.brand === selectedBrand);
+                const matchesStatus = (selectedStatus === "ALL") || (item.status === selectedStatus);
+
+                return matchesSearch && matchesBrand && matchesStatus;
+            });
+
+            renderCatalog(filtered);
+        }
+
+        // INITIAL RENDER
+        renderCatalog(products);
+    </script>
+</body>
+</html>
