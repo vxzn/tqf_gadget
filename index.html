@@ -3,96 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Katalog HP Second Bergaransi | tqf.gadget</title>
-    <!-- Google Fonts & FontAwesome Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>tqf.gadget — Official Store by Taufiq</title>
+    <!-- Google Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* CSS RESET & VARIABLES */
+        /* PALET WARNA BERDASARKAN LOGO TQF.GADGET */
+        :root {
+            --bg-dark: #080d1a;
+            --card-bg: #0f172a;
+            --accent-cyan: #00d2fe;
+            --accent-cyan-glow: rgba(0, 210, 254, 0.35);
+            --accent-green: #22c55e;
+            --text-main: #ffffff;
+            --text-sub: #94a3b8;
+            --border-line: #1e293b;
+            --wa-color: #25d366;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent-color: #2563eb;
-            --accent-hover: #1d4ed8;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --border-color: #334155;
-            --wa-color: #25d366;
-            --wa-hover: #1ebe5d;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            padding-bottom: 40px;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            padding-bottom: 50px;
         }
 
-        /* HEADER & BANNER */
+        /* HEADER DENGAN LOGO & GLOW EFFECT */
         header {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            padding: 24px 16px;
+            background: linear-gradient(180deg, #0f172a 0%, #080d1a 100%);
+            padding: 30px 16px 20px;
             text-align: center;
-            border-bottom: 2px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            border-bottom: 1px solid var(--border-line);
+            position: relative;
         }
 
-        .brand-logo {
+        .logo-wrapper {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 12px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, var(--accent-cyan), #1e293b, var(--accent-cyan));
+            box-shadow: 0 0 25px var(--accent-cyan-glow);
+        }
+
+        .logo-wrapper img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .brand-title {
             font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.5px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
         }
 
-        .brand-logo span {
-            color: var(--accent-color);
+        .brand-title span {
+            color: var(--accent-cyan);
         }
 
-        .tagline {
+        .by-owner {
             font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-top: 4px;
+            color: var(--text-sub);
+            margin-top: 2px;
+            font-style: italic;
         }
 
         .badges {
             display: flex;
             justify-content: center;
-            gap: 8px;
-            margin-top: 12px;
+            gap: 10px;
+            margin-top: 16px;
             flex-wrap: wrap;
         }
 
         .badge {
-            background-color: rgba(37, 99, 235, 0.15);
-            color: #60a5fa;
-            border: 1px solid rgba(37, 99, 235, 0.3);
-            padding: 4px 10px;
-            border-radius: 20px;
+            background-color: rgba(0, 210, 254, 0.1);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(0, 210, 254, 0.3);
+            padding: 6px 14px;
+            border-radius: 30px;
             font-size: 0.75rem;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        /* CONTAINER & CONTROLS */
+        .badge-green {
+            background-color: rgba(34, 197, 94, 0.1);
+            color: var(--accent-green);
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        /* CONTAINER & FILTER */
         .container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 20px 16px;
+            padding: 24px 16px;
         }
 
-        .filter-section {
+        .filter-card {
             background-color: var(--card-bg);
             padding: 16px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            border: 1px solid var(--border-line);
             margin-bottom: 24px;
             display: flex;
             flex-direction: column;
@@ -100,9 +124,8 @@
         }
 
         @media (min-width: 768px) {
-            .filter-section {
+            .filter-card {
                 flex-direction: row;
-                align-items: center;
             }
         }
 
@@ -113,35 +136,40 @@
 
         .search-box input {
             width: 100%;
-            padding: 10px 12px 10px 38px;
-            background-color: var(--bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-primary);
+            padding: 12px 14px 12px 42px;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-line);
+            border-radius: 10px;
+            color: var(--text-main);
             font-size: 0.9rem;
             outline: none;
         }
 
-        .search-box i {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
+        .search-box input:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 10px var(--accent-cyan-glow);
         }
 
-        .filter-group {
+        .search-box i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-sub);
+        }
+
+        .filter-selects {
             display: flex;
             gap: 8px;
         }
 
-        .filter-group select {
+        .filter-selects select {
             flex: 1;
-            padding: 10px;
-            background-color: var(--bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-primary);
+            padding: 12px;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-line);
+            border-radius: 10px;
+            color: var(--text-main);
             font-size: 0.85rem;
             outline: none;
         }
@@ -153,29 +181,30 @@
             gap: 20px;
         }
 
-        .card {
+        .product-card {
             background-color: var(--card-bg);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            border: 1px solid var(--border-line);
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s ease;
         }
 
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        .product-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-50%);
+            box-shadow: 0 10px 25px rgba(0, 210, 254, 0.15);
         }
 
-        .card-img-wrapper {
+        .img-container {
             position: relative;
             width: 100%;
-            padding-top: 75%; /* Aspect Ratio 4:3 */
-            background-color: #0f172a;
+            padding-top: 80%;
+            background-color: #000000;
         }
 
-        .card-img {
+        .img-container img {
             position: absolute;
             top: 0;
             left: 0;
@@ -184,140 +213,129 @@
             object-fit: cover;
         }
 
-        .status-tag {
+        .status-badge {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 4px 8px;
-            border-radius: 6px;
+            top: 12px;
+            right: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
             font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
         }
 
-        .status-ready {
-            background-color: #16a34a;
-            color: #ffffff;
-        }
+        .bg-ready { background-color: var(--accent-green); color: #000000; }
+        .bg-sold { background-color: #ef4444; color: #ffffff; }
 
-        .status-sold {
-            background-color: #dc2626;
-            color: #ffffff;
-        }
-
-        .card-body {
+        .card-content {
             padding: 16px;
             display: flex;
             flex-direction: column;
             flex: 1;
         }
 
-        .item-brand {
+        .brand-tag {
             font-size: 0.75rem;
-            color: var(--accent-color);
-            font-weight: 600;
+            color: var(--accent-cyan);
+            font-weight: 700;
             text-transform: uppercase;
         }
 
-        .item-title {
-            font-size: 1.1rem;
+        .item-name {
+            font-size: 1.15rem;
             font-weight: 700;
-            margin: 2px 0 8px 0;
-            color: var(--text-primary);
+            margin: 4px 0;
         }
 
-        .item-price {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #38bdf8;
+        .price-tag {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--accent-cyan);
             margin-bottom: 12px;
         }
 
-        .item-specs {
+        .spec-list {
             list-style: none;
             font-size: 0.8rem;
-            color: var(--text-secondary);
+            color: var(--text-sub);
             margin-bottom: 16px;
             display: flex;
             flex-direction: column;
-            gap: 4px;
-        }
-
-        .item-specs li {
-            display: flex;
-            align-items: center;
             gap: 6px;
         }
 
-        .item-specs i {
-            color: var(--accent-color);
+        .spec-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .spec-list i {
+            color: var(--accent-cyan);
             width: 14px;
         }
 
-        .btn-wa {
+        .btn-action {
             margin-top: auto;
-            background-color: var(--wa-color);
-            color: #ffffff;
+            background: linear-gradient(135deg, #00d2fe, #0284c7);
+            color: #000000;
             text-decoration: none;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 12px;
+            border-radius: 10px;
             font-size: 0.85rem;
-            font-weight: 600;
+            font-weight: 700;
             text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: background 0.2s;
+            transition: opacity 0.2s;
         }
 
-        .btn-wa:hover {
-            background-color: var(--wa-hover);
+        .btn-action:hover {
+            opacity: 0.9;
         }
 
-        .btn-disabled {
-            background-color: #475569;
-            cursor: not-allowed;
+        .btn-sold {
+            background: #334155;
+            color: #94a3b8;
             pointer-events: none;
-        }
-
-        /* LOADING & FOOTER */
-        .loading-text {
-            grid-column: 1/-1;
-            text-align: center;
-            color: var(--text-secondary);
-            padding: 40px 0;
-            font-size: 1rem;
         }
 
         footer {
             text-align: center;
             margin-top: 40px;
             font-size: 0.8rem;
-            color: var(--text-secondary);
+            color: var(--text-sub);
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
+    <!-- HEADER DENGAN LOGO ENGRAVED -->
     <header>
-      <!-- HEADER BARU (GAMBAR LOGO) -->
-<div class="brand-logo">
-    <img src="LOGO TQF.PNG" alt="tqf.gadget Logo" style="height: 50px; width: auto; vertical-align: middle;">
-</div>
+        <div class="logo-wrapper">
+            <!-- PENTING: Ganti 'LOGO_TQF.PNG' sesuai nama file logo kamu di GitHub -->
+            <img src="LOGO TQF.PNG" alt="tqf.gadget Logo">
+        </div>
+        <div class="brand-title">TQF<span>.GADGET</span></div>
+        <div class="by-owner">by Taufiq</div>
+
+        <div class="badges">
+            <span class="badge badge-green"><i class="fa-solid fa-circle-check"></i> QC 100% Normal</span>
+            <span class="badge"><i class="fa-solid fa-shield-halved"></i> Garansi Toko</span>
+            <span class="badge"><i class="fa-solid fa-handshake"></i> Melayani COD</span>
+        </div>
     </header>
 
-    <!-- MAIN CONTENT -->
     <div class="container">
-        
-        <!-- SEARCH & FILTER BAR -->
-        <div class="filter-section">
+        <!-- FILTER & SEARCH -->
+        <div class="filter-card">
             <div class="search-box">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="Cari tipe HP (misal: Samsung, iPhone, Poco)..." onkeyup="filterItems()">
+                <input type="text" id="searchInput" placeholder="Cari unit (misal: Samsung A52, iPhone)..." onkeyup="filterItems()">
             </div>
-            <div class="filter-group">
+            <div class="filter-selects">
                 <select id="brandFilter" onchange="filterItems()">
                     <option value="ALL">Semua Brand</option>
                     <option value="Samsung">Samsung</option>
@@ -326,144 +344,124 @@
                     <option value="Vivo">Vivo</option>
                     <option value="Oppo">Oppo / Realme</option>
                 </select>
-
                 <select id="statusFilter" onchange="filterItems()">
                     <option value="ALL">Semua Status</option>
                     <option value="Ready">Ready Stock</option>
-                    <option value="Sold Out">Terjual (Sold)</option>
+                    <option value="Sold Out">Terjual</option>
                 </select>
             </div>
         </div>
 
-        <!-- KATALOG GRID -->
+        <!-- KATALOG PRODUK -->
         <div class="catalog-grid" id="catalogGrid">
-            <div class="loading-text">
+            <p style="grid-column: 1/-1; text-align: center; padding: 40px 0; color: var(--text-sub);">
                 <i class="fa-solid fa-spinner fa-spin"></i> Memuat data stok terbaru...
-            </div>
+            </p>
         </div>
 
         <footer>
-            <p>&copy; 2026 tqf.gadget — HP Second Berkualitas & Terpercaya</p>
+            <p>&copy; 2026 tqf.gadget by Taufiq. All rights reserved.</p>
         </footer>
     </div>
 
-    <!-- JAVASCRIPT CONNECTED TO GOOGLE SHEETS -->
     <script>
-        // 1. UBAH DENGAN NOMOR WHATSAPP KAMU (Format 628xxx)
-        const NO_WA = "6281910418032"; 
-
-        // 2. PASTE LINK GOOGLE SHEETS (CSV) KAMU DI SINI
-        const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR-m8ygM3npYxQ9mKEditjZaJeULLwj8mwC_cFXCjCa-HV73bxanqE5aYhCjdt1mI_l4TiX88W_oAgg/pub?output=csv"; 
+        const NO_WA = "6281910418032"; // Ganti dengan No WA kamu
+        const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR-m8ygM3npYxQ9mKEditjZaJeULLwj8mwC_cFXCjCa-HV73bxanqE5aYhCjdt1mI_l4TiX88W_oAgg/pub?output=csv"; // Link CSV Publik Google Sheets
 
         let allProducts = [];
 
-        // FUNGSI FORMAT RUPIAH
-        function formatRupiah(number) {
-            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
+        function formatRupiah(num) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num);
         }
 
-        // FUNGSI PARSING CSV
         function parseCSV(text) {
-            const lines = text.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+            const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
             const products = [];
-
-            // Lewati baris pertama (Header)
             for (let i = 1; i < lines.length; i++) {
-                // Regex untuk memisahkan koma tetapi mengabaikan koma di dalam tanda kutip
-                const cols = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(col => col.replace(/^"|"$/g, '').trim());
-                
+                const cols = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
                 if (cols.length >= 8) {
                     products.push({
                         id: cols[0] || `TQ-${i}`,
-                        title: cols[1] || 'Tipe HP',
+                        title: cols[1] || 'Unit HP',
                         brand: cols[2] || 'Lainnya',
                         ramRom: cols[4] || '-',
                         condition: cols[6] || '-',
                         qcStatus: cols[7] || '-',
                         price: parseInt(cols[8]) || 0,
                         status: cols[9] || 'Ready',
-                        image: cols[10] || 'https://via.placeholder.com/600x600?text=No+Image'
+                        image: cols[10] || 'https://via.placeholder.com/600x600?text=tqf.gadget'
                     });
                 }
             }
             return products;
         }
 
-        // FUNGSI AMBIL DATA DARI GOOGLE SHEETS
         async function fetchProducts() {
             const grid = document.getElementById('catalogGrid');
             try {
-                const response = await fetch(SHEET_CSV_URL);
-                if (!response.ok) throw new Error("Gagal terhubung ke Google Sheets");
-                
-                const csvText = await response.text();
+                const res = await fetch(SHEET_CSV_URL);
+                const csvText = await res.text();
                 allProducts = parseCSV(csvText);
                 renderCatalog(allProducts);
-            } catch (error) {
-                console.error(error);
-                grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #ef4444; padding: 40px 0;">Gagal memuat stok. Pastikan URL Google Sheets CSV sudah benar dan dipublikasikan.</p>`;
+            } catch (err) {
+                grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #ef4444; padding: 40px 0;">Gagal mengambil data dari Google Sheets. Pastikan link CSV sudah benar.</p>`;
             }
         }
 
-        // FUNGSI RENDER KATALOG
         function renderCatalog(items) {
             const grid = document.getElementById('catalogGrid');
             grid.innerHTML = "";
 
             if (items.length === 0) {
-                grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-secondary); padding: 40px 0;">Unit tidak ditemukan.</p>`;
+                grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-sub); padding: 40px 0;">Unit tidak ditemukan.</p>`;
                 return;
             }
 
             items.forEach(item => {
                 const isReady = item.status.toLowerCase() === "ready";
-                const waMessage = encodeURIComponent(`Halo tqf.gadget, saya tertarik dengan unit ${item.title} (${item.id}) seharga ${formatRupiah(item.price)} di katalog website. Apakah unit masih ready?`);
+                const waMessage = encodeURIComponent(`Halo tqf.gadget (by Taufiq), saya mau tanya unit ${item.title} (${item.id}) seharga ${formatRupiah(item.price)} di website. Apakah masih ready?`);
                 const waLink = `https://wa.me/${NO_WA}?text=${waMessage}`;
 
-                const cardHTML = `
-                    <div class="card">
-                        <div class="card-img-wrapper">
-                            <img src="${item.image}" alt="${item.title}" class="card-img" onerror="this.src='https://via.placeholder.com/600x600?text=HP+Second'">
-                            <span class="status-tag ${isReady ? 'status-ready' : 'status-sold'}">${item.status}</span>
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <div class="img-container">
+                            <img src="${item.image}" alt="${item.title}" onerror="this.src='https://via.placeholder.com/600x600?text=tqf.gadget'">
+                            <span class="status-badge ${isReady ? 'bg-ready' : 'bg-sold'}">${item.status}</span>
                         </div>
-                        <div class="card-body">
-                            <span class="item-brand">${item.brand}</span>
-                            <h3 class="item-title">${item.title}</h3>
-                            <div class="item-price">${formatRupiah(item.price)}</div>
-                            <ul class="item-specs">
+                        <div class="card-content">
+                            <span class="brand-tag">${item.brand}</span>
+                            <h3 class="item-name">${item.title}</h3>
+                            <div class="price-tag">${formatRupiah(item.price)}</div>
+                            <ul class="spec-list">
                                 <li><i class="fa-solid fa-microchip"></i> RAM/Internal: ${item.ramRom}</li>
                                 <li><i class="fa-solid fa-star"></i> Kondisi: ${item.condition}</li>
-                                <li><i class="fa-solid fa-circle-check"></i> ${item.qcStatus}</li>
+                                <li><i class="fa-solid fa-square-check"></i> ${item.qcStatus}</li>
                             </ul>
                             ${isReady 
-                                ? `<a href="${waLink}" target="_blank" class="btn-wa"><i class="fa-brands fa-whatsapp"></i> Tanya Unit / COD</a>`
-                                : `<a href="#" class="btn-wa btn-disabled"><i class="fa-solid fa-ban"></i> Terjual</a>`
+                                ? `<a href="${waLink}" target="_blank" class="btn-action"><i class="fa-brands fa-whatsapp"></i> Chat WhatsApp / COD</a>`
+                                : `<a href="#" class="btn-action btn-sold"><i class="fa-solid fa-ban"></i> Terjual</a>`
                             }
                         </div>
                     </div>
                 `;
-                grid.innerHTML += cardHTML;
             });
         }
 
-        // FUNGSI FILTER & SEARCH
         function filterItems() {
-            const searchValue = document.getElementById('searchInput').value.toLowerCase();
-            const selectedBrand = document.getElementById('brandFilter').value;
-            const selectedStatus = document.getElementById('statusFilter').value;
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const brand = document.getElementById('brandFilter').value;
+            const status = document.getElementById('statusFilter').value;
 
             const filtered = allProducts.filter(item => {
-                const matchesSearch = item.title.toLowerCase().includes(searchValue) || item.ramRom.toLowerCase().includes(searchValue);
-                const matchesBrand = (selectedBrand === "ALL") || (item.brand.toLowerCase() === selectedBrand.toLowerCase());
-                const matchesStatus = (selectedStatus === "ALL") || (item.status.toLowerCase() === selectedStatus.toLowerCase());
-
-                return matchesSearch && matchesBrand && matchesStatus;
+                const mSearch = item.title.toLowerCase().includes(search) || item.ramRom.toLowerCase().includes(search);
+                const mBrand = (brand === "ALL") || (item.brand.toLowerCase() === brand.toLowerCase());
+                const mStatus = (status === "ALL") || (item.status.toLowerCase() === status.toLowerCase());
+                return mSearch && mBrand && mStatus;
             });
 
             renderCatalog(filtered);
         }
 
-        // AMBIL DATA SAAT HALAMAN DIBUKA
         fetchProducts();
     </script>
 </body>
