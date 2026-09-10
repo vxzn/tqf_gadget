@@ -1,8 +1,8 @@
 backend:
   name: github
-  repo: vxzn/tqf_gadget # Sesuaikan nama repositori
-  branch: main # Sesuaikan nama branch utama (main/master)
-
+  repo: vxzn/tqf_gadget
+  branch: main
+  auth_type: pkce
 media_folder: "images/uploads" # Folder tempat foto yang diupload tersimpan
 public_folder: "images/uploads"
 
