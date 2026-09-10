@@ -281,7 +281,15 @@
             pointer-events: none;
         }
 
-        /* FOOTER */
+        /* LOADING & FOOTER */
+        .loading-text {
+            grid-column: 1/-1;
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 40px 0;
+            font-size: 1rem;
+        }
+
         footer {
             text-align: center;
             margin-top: 40px;
@@ -332,7 +340,9 @@
 
         <!-- KATALOG GRID -->
         <div class="catalog-grid" id="catalogGrid">
-            <!-- Data produk akan dirender oleh JavaScript di bawah -->
+            <div class="loading-text">
+                <i class="fa-solid fa-spinner fa-spin"></i> Memuat data stok terbaru...
+            </div>
         </div>
 
         <footer>
@@ -340,73 +350,62 @@
         </footer>
     </div>
 
-    <!-- JAVASCRIPT / DATA PRODUK -->
+    <!-- JAVASCRIPT CONNECTED TO GOOGLE SHEETS -->
     <script>
-        // No WA Toko (Ganti dengan nomor WhatsApp aktif Anda, format 628xxx)
-        const NO_WA = "6281910418032";
+        // 1. UBAH DENGAN NOMOR WHATSAPP KAMU (Format 628xxx)
+        const NO_WA = "6281910418032"; 
 
-        // DATA KATALOG STOK (Bisa ditambah/edit langsung di sini)
-        const products = [
-            {
-                id: "TQ-001",
-                title: "Samsung Galaxy A52",
-                brand: "Samsung",
-                ramRom: "8GB / 128GB",
-                condition: "95% Mulus (Pemakaian Wajar)",
-                qcStatus: "QC 100% Normal - Fullset Original",
-                price: 2300000,
-                status: "Ready",
-                image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500&auto=format&fit=crop&q=60"
-            },
-            {
-                id: "TQ-002",
-                title: "Redmi Note 11",
-                brand: "Xiaomi",
-                ramRom: "6GB / 128GB",
-                condition: "90% Lecet Pemakaian",
-                qcStatus: "QC 100% Normal - Unit + Charger Fast",
-                price: 1650000,
-                status: "Ready",
-                image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500&auto=format&fit=crop&q=60"
-            },
-            {
-                id: "TQ-003",
-                title: "iPhone 11 64GB",
-                brand: "Apple",
-                ramRom: "64GB",
-                condition: "98% Mulus (Like New)",
-                qcStatus: "BH 85% - TrueTone On - 3uTools Hijau",
-                price: 4100000,
-                status: "Sold Out",
-                image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=500&auto=format&fit=crop&q=60"
-            },
-            {
-                id: "TQ-004",
-                title: "Poco M4 Pro",
-                brand: "Xiaomi",
-                ramRom: "8GB / 256GB",
-                condition: "93% Mulus",
-                qcStatus: "QC 100% Normal - Fullset Dusbook",
-                price: 1950000,
-                status: "Ready",
-                image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&auto=format&fit=crop&q=60"
-            },
-            {
-                id: "TQ-005",
-                title: "Vivo Y21s",
-                brand: "Vivo",
-                ramRom: "4GB / 128GB",
-                condition: "88% Ada Jamur Casing",
-                qcStatus: "QC Normal - Unit Only",
-                price: 950000,
-                status: "Ready",
-                image: "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=500&auto=format&fit=crop&q=60"
-            }
-        ];
+        // 2. PASTE LINK GOOGLE SHEETS (CSV) KAMU DI SINI
+        const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR-m8ygM3npYxQ9mKEditjZaJeULLwj8mwC_cFXCjCa-HV73bxanqE5aYhCjdt1mI_l4TiX88W_oAgg/pub?output=csv"; 
+
+        let allProducts = [];
 
         // FUNGSI FORMAT RUPIAH
         function formatRupiah(number) {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
+        }
+
+        // FUNGSI PARSING CSV
+        function parseCSV(text) {
+            const lines = text.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+            const products = [];
+
+            // Lewati baris pertama (Header)
+            for (let i = 1; i < lines.length; i++) {
+                // Regex untuk memisahkan koma tetapi mengabaikan koma di dalam tanda kutip
+                const cols = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(col => col.replace(/^"|"$/g, '').trim());
+                
+                if (cols.length >= 8) {
+                    products.push({
+                        id: cols[0] || `TQ-${i}`,
+                        title: cols[1] || 'Tipe HP',
+                        brand: cols[2] || 'Lainnya',
+                        ramRom: cols[4] || '-',
+                        condition: cols[6] || '-',
+                        qcStatus: cols[7] || '-',
+                        price: parseInt(cols[8]) || 0,
+                        status: cols[9] || 'Ready',
+                        image: cols[10] || 'https://via.placeholder.com/600x600?text=No+Image'
+                    });
+                }
+            }
+            return products;
+        }
+
+        // FUNGSI AMBIL DATA DARI GOOGLE SHEETS
+        async function fetchProducts() {
+            const grid = document.getElementById('catalogGrid');
+            try {
+                const response = await fetch(SHEET_CSV_URL);
+                if (!response.ok) throw new Error("Gagal terhubung ke Google Sheets");
+                
+                const csvText = await response.text();
+                allProducts = parseCSV(csvText);
+                renderCatalog(allProducts);
+            } catch (error) {
+                console.error(error);
+                grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #ef4444; padding: 40px 0;">Gagal memuat stok. Pastikan URL Google Sheets CSV sudah benar dan dipublikasikan.</p>`;
+            }
         }
 
         // FUNGSI RENDER KATALOG
@@ -420,14 +419,14 @@
             }
 
             items.forEach(item => {
-                const isReady = item.status === "Ready";
+                const isReady = item.status.toLowerCase() === "ready";
                 const waMessage = encodeURIComponent(`Halo tqf.gadget, saya tertarik dengan unit ${item.title} (${item.id}) seharga ${formatRupiah(item.price)} di katalog website. Apakah unit masih ready?`);
                 const waLink = `https://wa.me/${NO_WA}?text=${waMessage}`;
 
                 const cardHTML = `
                     <div class="card">
                         <div class="card-img-wrapper">
-                            <img src="${item.image}" alt="${item.title}" class="card-img">
+                            <img src="${item.image}" alt="${item.title}" class="card-img" onerror="this.src='https://via.placeholder.com/600x600?text=HP+Second'">
                             <span class="status-tag ${isReady ? 'status-ready' : 'status-sold'}">${item.status}</span>
                         </div>
                         <div class="card-body">
@@ -456,10 +455,10 @@
             const selectedBrand = document.getElementById('brandFilter').value;
             const selectedStatus = document.getElementById('statusFilter').value;
 
-            const filtered = products.filter(item => {
+            const filtered = allProducts.filter(item => {
                 const matchesSearch = item.title.toLowerCase().includes(searchValue) || item.ramRom.toLowerCase().includes(searchValue);
-                const matchesBrand = (selectedBrand === "ALL") || (item.brand === selectedBrand);
-                const matchesStatus = (selectedStatus === "ALL") || (item.status === selectedStatus);
+                const matchesBrand = (selectedBrand === "ALL") || (item.brand.toLowerCase() === selectedBrand.toLowerCase());
+                const matchesStatus = (selectedStatus === "ALL") || (item.status.toLowerCase() === selectedStatus.toLowerCase());
 
                 return matchesSearch && matchesBrand && matchesStatus;
             });
@@ -467,47 +466,8 @@
             renderCatalog(filtered);
         }
 
-      
-// Masukkan URL Publikasi CSV dari Google Sheets kamu di sini
-const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR-m8ygM3npYxQ9mKEditjZaJeULLwj8mwC_cFXCjCa-HV73bxanqE5aYhCjdt1mI_l4TiX88W_oAgg/pub?output=csv"; 
-const NO_WA = "6281910418032"; // Nomor WA kamu
-
-// Fungsi untuk mengambil data dari Google Sheets secara otomatis
-async function fetchProductsFromSheets() {
-    try {
-        const response = await fetch(SHEET_CSV_URL);
-        const data = await response.text();
-        
-        // Parsing CSV menjadi Array Of Objects
-        const rows = data.split('\n').slice(1);
-        const products = rows.map(row => {
-            const cols = row.split(','); // atau pemisah sesuai regional
-            if (cols.length < 8) return null;
-            return {
-                id: cols[0]?.trim(),
-                title: cols[1]?.trim(),
-                brand: cols[2]?.trim(),
-                ramRom: cols[3]?.trim(),
-                condition: cols[4]?.trim(),
-                qcStatus: cols[5]?.trim(),
-                price: parseInt(cols[6]?.trim()) || 0,
-                status: cols[7]?.trim(),
-                image: cols[8]?.trim()
-            };
-        }).filter(item => item !== null);
-
-        window.allProducts = products;
-        renderCatalog(products);
-    } catch (error) {
-        console.error("Gagal mengambil data stok:", error);
-    }
-}
-
-// Panggil fungsi saat halaman dimuat
-fetchProductsFromSheets();
-
-          // INITIAL RENDER
-        renderCatalog(products);
+        // AMBIL DATA SAAT HALAMAN DIBUKA
+        fetchProducts();
     </script>
 </body>
 </html>
